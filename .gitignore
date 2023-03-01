@@ -264,3 +264,4 @@ $RECYCLE.BIN/
 venv/
 # End of https://www.toptal.com/developers/gitignore/api/python,git,linux,macos,windows
 
+.DS_Store
