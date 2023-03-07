@@ -35,5 +35,10 @@ class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String(120), nullable=False)
-    
+
+class User2(Base):
+    __tablename__ = "users2"
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    name = Column(String(120), nullable=False)
+
     
