@@ -38,6 +38,9 @@ class UserAnswer(Base):
     id        = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id   = Column(Integer, ForeignKey("users.id"))
     answer_id = Column(Integer, ForeignKey("answers.id"))
+    # timestamp
+    created_at = Column(DateTime, default=func.utc_timestamp())
+    updated_at = Column(DateTime, default=func.utc_timestamp(), onupdate=func.utc_timestamp())
     # relationship
     user   = relationship("User", back_populates='useranswer')
     answer = relationship("Answer", back_populates='useranswer')
@@ -47,6 +50,9 @@ class UserStack(Base):
     id       = Column(Integer, primary_key=True, index=True, autoincrement=True)
     user_id  = Column(Integer, ForeignKey("users.id"))
     stack_id = Column(Integer, ForeignKey("stacks.id"))
+    # timestamp
+    created_at = Column(DateTime, default=func.utc_timestamp())
+    updated_at = Column(DateTime, default=func.utc_timestamp(), onupdate=func.utc_timestamp())
     # relationship
     user  = relationship("User", back_populates="userstack")
     stack = relationship("Stack", back_populates="userstack")
@@ -124,6 +130,9 @@ class Post(Base):
     description     = Column(String(200), nullable=True)
     start_date      = Column(DateTime)
     status          = Column(String(50), default='active')
+    # timestamp
+    created_at = Column(DateTime, default=func.utc_timestamp())
+    updated_at = Column(DateTime, default=func.utc_timestamp(), onupdate=func.utc_timestamp())
     # relationship
     user         = relationship("User", back_populates = 'post')
     category     = relationship("Category", back_populates ='post')
@@ -178,6 +187,9 @@ class PostFlavor(Base):
     id              = Column(Integer, primary_key=True, index=True, autoincrement=True)
     post_id         = Column(Integer, ForeignKey("posts.id"))
     flavor_id       = Column(Integer, ForeignKey("flavors.id"))
+    # timestamp
+    created_at = Column(DateTime, default=func.utc_timestamp())
+    updated_at = Column(DateTime, default=func.utc_timestamp(), onupdate=func.utc_timestamp())
     # relationship
     post    = relationship("Post", back_populates = 'postflavor')
     flavor  = relationship("Flavor", back_populates = 'postflavor')
