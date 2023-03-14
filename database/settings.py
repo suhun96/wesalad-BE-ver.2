@@ -2,7 +2,7 @@ import os
 
 from dotenv                     import load_dotenv
 from sqlalchemy                 import create_engine
-from sqlalchemy.orm             import sessionmaker
+from sqlalchemy.orm             import sessionmaker, registry
 from sqlalchemy.ext.declarative import declarative_base
 
 load_dotenv()
@@ -14,10 +14,12 @@ DB_DATABASE = os.getenv("DB_DATABASE")
 
 DATABASE_URL = f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}"
 
+Base = declarative_base()
+mapper_registry = registry()
+
 Engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=Engine)
 
-Base = declarative_base()
 
 def get_db():
     db = SessionLocal()
@@ -25,3 +27,5 @@ def get_db():
         yield db
     finally:
         db.close()
+
+mapper_registry.configure()

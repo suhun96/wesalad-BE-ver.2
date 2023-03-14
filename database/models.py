@@ -73,8 +73,9 @@ class Answer(Base):
     description = Column(String(200))
     image_url   = Column(URLType)
     # relationship
-    question   = relationship("Question", back_populates= 'answer')
-    useranswer = relationship("UserAnswer", back_populates='answer')
+    question    = relationship("Question", back_populates = 'answer')
+    useranswer  = relationship("UserAnswer", back_populates ='answer')
+    postanswer   = relationship("PostAnswer", back_populates ='answer')
     
 class Stack(Base):
     __tablename__ = "stacks"
@@ -107,7 +108,7 @@ class Place(Base):
     id      = Column(Integer, primary_key=True, index=True, autoincrement=True)
     title   = Column(String(200))
     # relationship
-    postplaces = relationship("PostPlace", back_populates= "place")
+    postplace = relationship("PostPlace", back_populates= "place")
 
 class Flavor(Base):
     __tablename__ = "flavors"
@@ -162,7 +163,7 @@ class PostStack(Base):
     stack_id        = Column(Integer, ForeignKey("stacks.id"))
     # relationship
     post    = relationship("Post", back_populates= 'poststack')
-    stack   = relationship("Stack", back_populates="poststack")
+    stack   = relationship("Stack", back_populates= "poststack")
 
 class PostApplyWay(Base):
     __tablename__ = "postapplyways"
