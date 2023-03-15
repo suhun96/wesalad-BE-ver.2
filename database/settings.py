@@ -1,9 +1,11 @@
 import os
 
+from fastapi                    import HTTPException, status
 from dotenv                     import load_dotenv
 from sqlalchemy                 import create_engine
 from sqlalchemy.orm             import sessionmaker, registry
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.exc             import DatabaseError
 
 load_dotenv()
 DB_USERNAME = os.getenv("DB_USERNAME")
@@ -22,10 +24,13 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=Engine)
 
 
 def get_db():
+    db = None
     db = SessionLocal()
     try: 
         yield db
+    except DatabaseError:
+        raise HTTPException(status_code = status.HTTP_404_NOT_FOUND, detail = "[Database error]"  )
     finally:
-        db.close()
-
+        if db is not None:
+            db.close()
 mapper_registry.configure()
